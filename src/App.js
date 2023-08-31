@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-function App() {
+import { setSelectedCity } from './components/redux/action';
+import CitySelection from './components/CitySelection';
+import WeatherContainer from './components/WeatherContainer';
+import { cities } from './components/citiesdata';
+
+const App = () => {
+  const dispatch = useDispatch();
+  const selectedCity = useSelector((state) => state.selectedCity);
+
+  const handleCitySelect = (city) => {
+    dispatch(setSelectedCity(city));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app" style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+      <h1>Weather Forecast App</h1>
+      <CitySelection cities={cities} selectedCity={selectedCity} onSelectCity={handleCitySelect} />
+      <WeatherContainer />
     </div>
   );
-}
+};
 
 export default App;
